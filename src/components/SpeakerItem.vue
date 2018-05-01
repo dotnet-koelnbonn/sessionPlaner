@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { IDisplaySpeaker } from "../maintypes";
+import { IDisplaySpeaker } from "@/maintypes";
 
 @Component
 export default class SpeakerItem extends Vue {
@@ -17,8 +17,8 @@ export default class SpeakerItem extends Vue {
   constructor() {
     super();
   }
-  @Prop() 
-  private speaker!: IDisplaySpeaker;
+  @Prop({default:{}}) 
+  private speaker: IDisplaySpeaker;
 
 }
 </script>
@@ -28,10 +28,12 @@ export default class SpeakerItem extends Vue {
   display: flex;
   flex-flow: row;
   align-items: center;
+  margin-left: 1em;
   img {
     width: 4em;
     height: 4em;
-        border-radius: 50%;
+    border-radius: 50%;
+    margin-right: 1em;
   }
 }
 </style>

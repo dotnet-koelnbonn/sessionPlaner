@@ -4,14 +4,12 @@
     
     </header>
     <main>
-    <router-view/>
+      <transition  name="fade">
+        <router-view/>
+      </transition>
     </main>
     <footer>
       <div class="navigation ">
-
-      <!-- <div>
-       <router-link class="button" to="/"><i class="fas fa-2x fa-home"></i><br/>Home</router-link>
-      </div> -->
       <div>
       <router-link class="button" to="/favorites"><i class="fas fa-2x fa-star"></i><br/>Favoriten</router-link>
       </div>
@@ -30,9 +28,9 @@
 </template>
 
 <style lang="scss">
-
-body, html {
-  font-family: 'Open Sans', sans-serif;
+body,
+html {
+  font-family: "Open Sans", sans-serif;
 }
 html,
 body,
@@ -40,7 +38,7 @@ body,
   height: 100%; /* needed for proper layout */
 }
 body {
-    overflow: hidden;
+  overflow: hidden;
 }
 .mainscreen {
   display: flex;
@@ -54,12 +52,12 @@ header {
 main {
   flex: 1 1 auto;
   position: relative;
-    overflow-y: auto;
--webkit-overflow-scrolling: touch;    
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 footer {
-    flex: 0 0 auto;
-    background-color: rgb(81,88,132);
+  flex: 0 0 auto;
+  background-color: rgb(81, 88, 132);
   .navigation {
     display: flex;
     flex-direction: row;
@@ -77,13 +75,24 @@ footer {
     }
   }
 }
+.fade-enter-active, .fade-leave-active {
+  transition: left .5s;
+}
+.fade-enter { //, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  left: 0;
+}
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from "vue-property-decorator";
+import { ActionTree } from "vuex";
+import { IAppState } from './maintypes';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
+
 
 @Component
 export default class App extends Vue {
+ 
 }
 </script>
 

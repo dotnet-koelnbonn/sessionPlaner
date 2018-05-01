@@ -2,7 +2,7 @@
 <div class="sessions">
   <div v-for="group in groups" v-bind:key="group.name">
        <h2>{{group.name}}</h2>
-       <SessionItem v-bind:session="session" v-for="session in group.sessions" v-bind:key="session.Id" v-on:toggle-favorite="toggle"/>         
+       <SessionItem v-bind:session="session" v-for="session in group.sessions" v-bind:key="session.id" v-on:toggle-favorite="toggle"/>         
   </div>
 </div>
 </template>
@@ -16,7 +16,7 @@ import SessionItem from "./SessionItem.vue";
   components: { SessionItem }
 })
 export default class SessionGroups extends Vue {
-  @Prop() groups!: ISessionGroup[];
+  @Prop() groups: ISessionGroup[];
   toggle(sessionId:number) {
     this.$emit('toggle-favorite', sessionId);
   }

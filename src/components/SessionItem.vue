@@ -1,6 +1,6 @@
 <template>
 <div class="session-item">
-<router-link :to="{ name: 'session', params: { id: session.id }}" tag="div" class="data">
+<router-link :to="{ name: 'onesession', params: { id: session.id }}" tag="div" class="data">
       <h3>{{ session.title }}</h3>
       <div class="speaker" v-for="speaker in session.speakers" v-bind:key="speaker.id" >{{ speaker.name }}</div>
       <span class="location">{{ session.location.name }}</span>
@@ -24,8 +24,8 @@ import { IDisplaySession } from "@/maintypes";
 @Component
 export default class SessionItem extends Vue {
 
-  @Prop()
-  private session!: IDisplaySession;
+  @Prop({default:{}})
+  private session: IDisplaySession;
 
  toggle() {
     this.$emit('toggle-favorite', this.session.id);
@@ -70,8 +70,6 @@ export default class SessionItem extends Vue {
     flex-flow:row;
     align-items: center;
   }
-  a {
 
-  }
 }
 </style>

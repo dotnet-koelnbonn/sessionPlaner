@@ -8,6 +8,7 @@ import { actions } from './actions';
 import { mutations } from './mutations';
 
 export const state: IFavoritesState = {
+    groups: []
 };
 
 const namespaced: boolean = true;

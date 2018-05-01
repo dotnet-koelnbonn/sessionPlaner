@@ -17,8 +17,14 @@ const namespace: string = 'home';
 export default class Home extends Vue {
   mounted() {
     this.load();
+    const ids = localStorage.getItem('dncFavorites');
+    if (ids) {
+      this.$router.push({name:'favorites'})
+    } else {
+      this.$router.push({name:'sessions'})
+    }
   }
   load: any;
-  title!: string;
+  title: string;
 }
 </script>

@@ -8,10 +8,11 @@ import { actions } from './actions';
 import { mutations } from './mutations';
 
 export const state: ISessionState = {
-    groups: []
+    groups: [],
+    sessions: []
 };
 
-const namespaced: boolean = false;
+const namespaced: boolean = true;
 
 export const sessions : Module<ISessionState, IAppState> = {
     namespaced,

@@ -11,6 +11,7 @@ import { Session } from 'inspector';
 
 Vue.use(Router)
 
+
 export default new Router({
   routes: [
     {
@@ -40,7 +41,7 @@ export default new Router({
     },
     {
       path: '/sessions/:id',
-      name: 'session',
+      name: 'onesession',
       component: SessionDetail
     },
     {

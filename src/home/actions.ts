@@ -5,8 +5,8 @@ import * as dataService from '../services/dataService';
 
 export const actions : ActionTree<IHomeState, IAppState> = {
     async load({commit, rootState}) {
-        if (await dataService.loadData(rootState)) {
-            commit('dataLoaded', rootState);
-        }
+        // if (await dataService.loadData(rootState)) {
+        //     commit('dataLoaded', rootState);
+        // }
     }
 }

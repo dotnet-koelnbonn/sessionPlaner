@@ -8,6 +8,6 @@ export interface ISessionGroup {
 
 export interface ISessionState {
     groups: ISessionGroup[]; 
-    session?: IDisplaySession; 
+    sessions: IDisplaySession[];
 }
 

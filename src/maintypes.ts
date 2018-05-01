@@ -51,6 +51,7 @@ export interface IDisplaySpeaker {
     imageUrl : string;
     bio: string;
     sessions: IDisplaySession[];
+    groupName: string;
 }
 
 export interface IDisplayLocation {
@@ -64,23 +65,23 @@ export interface IDisplayTrack {
     title: string;
 }
 export interface IDisplaySession {
-    id: number;
+    id?: number;
     title?: string;
-    groupName: string;
-    endLocal: Date;
-    beginLocal: Date;
-    track : IDisplayTrack;
+    groupName?: string;
+    endLocal?: Date;
+    beginLocal?: Date;
+    track? : IDisplayTrack;
     trackName?: string;
     trackColor?: string;
-    location: IDisplayLocation;
+    location?: IDisplayLocation;
     isFavorite?: boolean;
-    speakers: IDisplaySpeaker[];
+    speakers?: IDisplaySpeaker[];
     fullTime?: string;
     abstract?: string;
 }
 
 export interface IAppState {
-    apiUrl : string;
+    apiUrl: string,
     favoriteIds: number[];
     service?: ApiResultConverter
 }
