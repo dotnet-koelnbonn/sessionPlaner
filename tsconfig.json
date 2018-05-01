@@ -8,8 +8,12 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
     "sourceMap": true,
     "baseUrl": ".",
+    "lib": [
+      "es2015", "dom"
+    ],
     "types": [
       "node"    ],
     "paths": {
