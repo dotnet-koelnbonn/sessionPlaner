@@ -4,9 +4,7 @@
     
     </header>
     <main>
-      <transition  name="fade">
         <router-view/>
-      </transition>
     </main>
     <footer>
       <div class="navigation ">
@@ -75,12 +73,7 @@ footer {
     }
   }
 }
-.fade-enter-active, .fade-leave-active {
-  transition: left .5s;
-}
-.fade-enter { //, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  left: 0;
-}
+
 </style>
 
 <script lang="ts">
