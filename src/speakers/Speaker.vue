@@ -26,21 +26,19 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { namespace } from "vuex-class";
 import SessionItem from "@/components/SessionItem.vue";
 import { IDisplaySpeaker } from "@/maintypes";
 
-const namespace: string = "speakers";
+const mod = namespace('speakers');
 
 @Component({
-  methods: mapActions(namespace, ["loadSpeaker", "setFavorite"]),
-  computed: mapGetters(namespace, ["currentSpeaker"]),
   components: { SessionItem }
 })
 export default class Speaker extends Vue {
-  loadSpeaker: any;
-  setFavorite: any;
-  currentSpeaker: IDisplaySpeaker;
+  @mod.Action loadSpeaker: (id:number)=>void;
+  @mod.Action setFavorite: (id:number)=>void;
+  @mod.Getter currentSpeaker: IDisplaySpeaker;
 
   async mounted() {
     const id = this.$route.params.id;

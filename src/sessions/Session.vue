@@ -27,19 +27,23 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import {
+  Getter,
+  Action,
+  namespace
+} from 'vuex-class'
 import { IDisplaySession } from "@/maintypes";
 import SpeakerItem from "@/components/SpeakerItem.vue";
 
+const mod = namespace('sessions');
+
 @Component({
-  methods: mapActions("sessions", ["loadSession", "setFavorite"]),
-  computed: mapGetters("sessions", ["currentSessions"]),
   components: { SpeakerItem }
 })
 export default class Session extends Vue {
-  loadSession: any;
-  setFavorite: any;
-  currentSessions: IDisplaySession[];
+  @mod.Action loadSession: (id:number) => void;
+  @mod.Action setFavorite: (id:number) => void;
+  @mod.Getter currentSessions: IDisplaySession[];
   async mounted() {
     const id = this.$route.params.id;
     await this.loadSession(Number(id));

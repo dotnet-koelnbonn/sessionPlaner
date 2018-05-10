@@ -10,21 +10,24 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { mapActions, mapGetters, mapMutations } from "vuex";
 import { ISessionGroup } from "@/sessions/types";
-
+import {
+  Getter,
+  Action,
+  namespace
+} from 'vuex-class'
 import SessionGroups from "@/components/SessionGroups.vue";
-const namespace: string = "favorites";
+
+
+const mod = namespace('favorites')
 
 @Component({
-  methods: mapActions(namespace, ["setFavorite", "loadGroups"]),
-  computed: mapGetters(namespace, ["groups"]),
   components: { SessionGroups }
 })
 export default class Favorites extends Vue {
-  loadGroups: any;
-  setFavorite: any;
-  groups: ISessionGroup[];
+  @mod.Action loadGroups: () => void;
+  @mod.Action setFavorite: (id:number) => void;
+  @mod.Getter groups: ISessionGroup[];
   async mounted() {
     await this.loadGroups();
   }

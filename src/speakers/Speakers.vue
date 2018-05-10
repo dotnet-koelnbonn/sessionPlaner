@@ -11,21 +11,19 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { namespace } from "vuex-class";
 import { ISpeakerGroup } from "./types";
 
 import SpeakerGroups from "@/components/SpeakerGroups.vue";
 
-const namespace: string = "speakers";
+const mod = namespace('speakers');
 
 @Component({
-  methods: mapActions(namespace, ["loadGroups"]),
-  computed: mapGetters(namespace, ["groups"]),
   components: { SpeakerGroups }
 })
 export default class Speakers extends Vue {
-  loadGroups: any;
-  groups: ISpeakerGroup[];
+  @mod.Action loadGroups: ()=>void;
+  @mod.Getter groups: ISpeakerGroup[];
   async mounted() {
     await this.loadGroups();
   }
