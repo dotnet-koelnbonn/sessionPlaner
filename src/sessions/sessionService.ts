@@ -1,10 +1,8 @@
 
 import { IAppState } from '../maintypes';
+import { findDisplaySession } from "@/services/dataService";
 
 export async function toogleFavorite(appState :IAppState, sessionId: number) {
-    if (!appState.service) {
-        return;
-    }
     let isFavorite = false;
     const index = appState.favoriteIds.indexOf(sessionId);
     if (index < 0) {
@@ -13,7 +11,7 @@ export async function toogleFavorite(appState :IAppState, sessionId: number) {
     }  else {
         appState.favoriteIds.splice(index, 1);
     }
-    const session = await appState.service.findDisplaySession(sessionId);
+    const session = findDisplaySession(appState.loadedSessions, sessionId);
     if (session != null) {
         session.isFavorite = isFavorite;
     }

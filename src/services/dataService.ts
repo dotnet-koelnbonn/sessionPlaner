@@ -3,14 +3,28 @@ import * as moment from "moment";
 import { speakers } from "@/speakers";
 
 async function loadData(url: string): Promise<types.IApiResult> {
-  console.log("loadData", url);
   const result = await fetch(url);
   const json = await result.json();
   return json;
 }
 
+export function findDisplaySession(sessions : types.IDisplaySession[], sessionId: number): types.IDisplaySession {
+  sessions = sessions.filter(s => s.id === sessionId);
+  if (sessions.length === 1) {
+    return sessions[0];
+  }
+  return null;
+}
+
+export function findDisplaySpeaker(speakers : types.IDisplaySpeaker[], speakerId: number): types.IDisplaySpeaker {
+  speakers = speakers.filter(s => s.id === speakerId);
+  if (speakers.length === 1) {
+    return speakers[0];
+  }
+  return null;
+}
 export class ApiResultConverter {
-  constructor(private $_rootState: types.IAppState) {}
+  constructor(private apiUrl: string) {}
 
   private $_data: types.IApiResult;
   private $_displaySessions: types.IDisplaySession[] = [];
@@ -18,19 +32,6 @@ export class ApiResultConverter {
   private $_displayLocations: { [id: number]: types.IDisplayLocation } = {};
   private $_displayTracks: { [id: number]: types.IDisplayTrack } = {};
 
-  async findDisplaySession(sessionId: number): Promise<types.IDisplaySession> {
-    const sessions = (await this.getDisplaySessions()).filter(
-      s => s.id === sessionId
-    );
-    if (sessions.length === 1) {
-      return sessions[0];
-    }
-    return null;
-  }
-  async findDisplaySpeaker(speakerId: number): Promise<types.IDisplaySpeaker> {
-    await this.ensureData();
-    return this.$_displaySpeakers[speakerId];
-  }
 
   async getDisplaySessions(): Promise<types.IDisplaySession[]> {
     await this.ensureData();
@@ -55,16 +56,12 @@ export class ApiResultConverter {
     if (this.$_data) {
         return;
     }
-    this.$_data = await loadData(this.$_rootState.apiUrl);
+    this.$_data = await loadData(this.apiUrl);
     this.convertLocations();
     this.convertTracks();
     this.convertSpeakers();
     this.$_displaySessions = this.convertSessions();
-    const ids = localStorage.getItem('dncFavorites');
-    if (ids) {
-        this.$_rootState.favoriteIds = ids.split(',').map(id=>Number(id))
-        await this.updateFavorites(this.$_rootState.favoriteIds);
-    }
+
   }
 
 
@@ -151,7 +148,7 @@ export class ApiResultConverter {
       "Dienstag",
       "Mittwoch",
       "Donnerstag",
-      "Freotag",
+      "Freitag",
       "Samstag"
     ];
     const day = days[session.beginLocal.getDay()];

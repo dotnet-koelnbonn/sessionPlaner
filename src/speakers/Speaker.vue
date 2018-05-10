@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
-import { namespace } from "vuex-class";
+import { namespace, Action } from "vuex-class";
 import SessionItem from "@/components/SessionItem.vue";
 import { IDisplaySpeaker } from "@/maintypes";
 
@@ -36,17 +36,19 @@ const mod = namespace('speakers');
   components: { SessionItem }
 })
 export default class Speaker extends Vue {
+  @Action initializeApplication:()=>void;
   @mod.Action loadSpeaker: (id:number)=>void;
-  @mod.Action setFavorite: (id:number)=>void;
+  @Action toogleFavorite: (id:number)=>void;
   @mod.Getter currentSpeaker: IDisplaySpeaker;
 
   async mounted() {
+    await this.initializeApplication();
     const id = this.$route.params.id;
     await this.loadSpeaker(Number(id));
   }
 
   toggle(id) {
-    this.setFavorite(id);
+    this.toogleFavorite(id);
   }
   back() {
     this.$router.back();

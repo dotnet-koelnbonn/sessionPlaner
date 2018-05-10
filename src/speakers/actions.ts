@@ -1,9 +1,9 @@
 import { ActionTree } from "vuex";
 import { IAppState, IDisplaySpeaker } from "../maintypes";
 import { ISpeakersState, ISpeakerGroup } from "./types";
+import { findDisplaySpeaker, findDisplaySession } from "@/services/dataService";
 
-async function createGroups(appState: IAppState): Promise<ISpeakerGroup[]> {
-  const speakers = await appState.service.getDisplaySpeakers();
+function createGroups(speakers: IDisplaySpeaker[]): ISpeakerGroup[] {
   const groupNames = speakers.map(s => s.groupName);
   const uniqueNames = groupNames
     .filter((elem, index, array) => array.indexOf(elem) === index)
@@ -42,21 +42,19 @@ function compareItems(a: IDisplaySpeaker, b: IDisplaySpeaker): number {
   return 0;
 }
 export const actions: ActionTree<ISpeakersState, IAppState> = {
-  async loadGroups({ commit, state, rootState }) {
+  loadGroups({ commit, state, rootState }) {
     if (state.groups && state.groups.length > 0) {
       return;
     }
-    console.log("loadGroups");
-    const groups = await createGroups(rootState);
+    const groups = createGroups(rootState.loadedSpeakers);
     commit("groupsLoaded", groups);
   },
-  async loadSpeaker({ commit, rootState }, id) {
-    console.log("loadSpeaker", id);
-    const speaker = await rootState.service.findDisplaySpeaker(id);
+  loadSpeaker({ commit, rootState }, id) {
+    const speaker = findDisplaySpeaker(rootState.loadedSpeakers, id);
     commit("speakerLoaded", speaker);
   },
-  async setFavorite({ commit, rootState, state }, id) {
-    const session = await rootState.service.findDisplaySession(id);
+  setFavorite({ commit, rootState, state }, id) {
+    const session = findDisplaySession(rootState.loadedSessions, id);
     commit("favoriteToggle", session);
   }
 };

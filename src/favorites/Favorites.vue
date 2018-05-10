@@ -25,14 +25,16 @@ const mod = namespace('favorites')
   components: { SessionGroups }
 })
 export default class Favorites extends Vue {
+  @Action initializeApplication:()=>void;
   @mod.Action loadGroups: () => void;
-  @mod.Action setFavorite: (id:number) => void;
+  @Action toogleFavorite: (id:number) => void;
   @mod.Getter groups: ISessionGroup[];
   async mounted() {
+    await this.initializeApplication();
     await this.loadGroups();
   }
   async toggle(sessionId: number) {
-    await this.setFavorite(sessionId);
+    await this.toogleFavorite(sessionId);
   }
 }
 </script>

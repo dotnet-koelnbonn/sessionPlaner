@@ -79,13 +79,10 @@ footer {
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { ActionTree } from "vuex";
-import { IAppState } from './maintypes';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
-
+import { Action } from "vuex-class";
 
 @Component
 export default class App extends Vue {
- 
 }
 </script>
 

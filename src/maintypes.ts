@@ -44,7 +44,6 @@ interface ITrack{
     title: string;
 }
 
-
 export interface IDisplaySpeaker {
     id : number;
     name : string;
@@ -83,7 +82,8 @@ export interface IDisplaySession {
 export interface IAppState {
     apiUrl: string,
     favoriteIds: number[];
-    service?: ApiResultConverter
+    loadedSessions: IDisplaySession[],
+    loadedSpeakers: IDisplaySpeaker[],
 }
 
 export interface IApiResult {

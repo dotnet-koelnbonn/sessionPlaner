@@ -12,7 +12,6 @@
 import { Vue, Component } from 'vue-property-decorator';
 import { ISessionGroup } from './types';
 import {
-  Getter,
   Action,
   namespace
 } from 'vuex-class'
@@ -24,15 +23,17 @@ const mod = namespace('sessions');
   components: {SessionGroups}
 })
 export default class Sessions extends Vue { 
+  @Action initializeApplication:()=>void;
   @mod.Action loadGroups: () => void;
-  @mod.Action setFavorite: (id:number) => void;
+  @Action toogleFavorite: (id:number) => void;
   @mod.Getter groups: ISessionGroup[];
   
-  async mounted() {
+  async created() {
+    await this.initializeApplication();
     await this.loadGroups();
   }
   toggle(sessionId : number) {
-      this.setFavorite(sessionId);      
+      this.toogleFavorite(sessionId);      
   }
 }
 </script>

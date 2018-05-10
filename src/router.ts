@@ -11,8 +11,7 @@ import { Session } from 'inspector';
 
 Vue.use(Router)
 
-
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -51,3 +50,7 @@ export default new Router({
     }
   ]
 })
+
+
+
+export default router;

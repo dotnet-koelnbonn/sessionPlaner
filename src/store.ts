@@ -7,48 +7,27 @@ import { sessions } from "./sessions/index";
 import { favorites } from "./favorites/index";
 import { ApiResultConverter } from "@/services/dataService";
 import { stat } from "fs";
+import  app from './app/index';
 
-const url = "https://dotnetcologne.azurewebsites.net/api/app/2083?imageUrl=yes";
 
 Vue.use(Vuex);
 
-function storeState(appState: IAppState, session: IDisplaySession) {
-  let isFavorite = session.isFavorite;
-  const index = appState.favoriteIds.indexOf(session.id);
 
-  if (isFavorite && index >= 0) {
-    return;
-  }
-  if (!isFavorite && index >= 0) {
-    appState.favoriteIds.splice(index, 1);
-    return;
-  }
-  if (isFavorite && index < 0) {
-    appState.favoriteIds.push(session.id);
-  }
-}
 const storeFavorites = (store: Store<IAppState>) => {
   store.subscribe((mutatation, state) => {
-    if (mutatation.type.endsWith('favoriteToggle')) {
-      const session = mutatation.payload as IDisplaySession;
-      storeState(state, session);
+    if (mutatation.type.endsWith('favoriteToggled')) {
       localStorage.setItem("dncFavorites", state.favoriteIds.toString());
     }
   });
 };
 
-const state: IAppState = {
-  apiUrl: url,
-  favoriteIds: [],
-  service: null
-};
-state.service = new ApiResultConverter(state);
-
-console.log("rootState", state);
+const isDebug = window.location.href.indexOf('localhost') > 0;
 
 const store: StoreOptions<IAppState> = {
-  state: state,
-  strict: false,
+  state: app.state,
+  strict: isDebug,
+  actions: app.actions,
+  mutations: app.mutations,
   modules: {
     home,
     speakers,

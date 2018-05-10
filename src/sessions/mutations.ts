@@ -15,16 +15,10 @@ export interface ISessionData {
 export const mutations: MutationTree<ISessionState> = {
     
     groupsLoaded(state, groups : ISessionGroup[]) {
-        console.log('groupsLoaded', groups);
         state.groups = groups;
     },
 
     sessionLoaded(state, session : IDisplaySession) {
-        console.log('sessionLoaded', session.id);      
        state.sessions = [session]; 
     },
-
-    async favoriteToggle(state, data : IDisplaySession) {
-       data.isFavorite = !data.isFavorite;
-    }
 }

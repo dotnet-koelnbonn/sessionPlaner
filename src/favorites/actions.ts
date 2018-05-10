@@ -2,9 +2,10 @@ import { ActionTree } from "vuex";
 import { IAppState, IDisplaySession } from "../maintypes";
 import { IFavoritesState } from "./types";
 import { ISessionGroup } from "@/sessions/types";
+import { findDisplaySession } from '@/services/dataService';
 
 async function createGroups(appState: IAppState): Promise<ISessionGroup[]> {
-  const sessions = (await appState.service.getDisplaySessions()).filter(
+  const sessions = appState.loadedSessions.filter(
     s => s.isFavorite
   );
   const groupNames = sessions.map(s => s.groupName);
@@ -50,8 +51,8 @@ export const actions: ActionTree<IFavoritesState, IAppState> = {
     const groups = await createGroups(rootState);
     commit("groupsLoaded", groups);
   },
-  async setFavorite({ commit, rootState, state }, id) {
-    const session = await rootState.service.findDisplaySession(id);
+  setFavorite({ commit, rootState, state }, id) {
+    const session = findDisplaySession(rootState.loadedSessions, id);
     commit("favoriteToggle", session);
   }
 };
